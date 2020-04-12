@@ -1,0 +1,21 @@
+{
+  "name": "xz-stories",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js",
+    "package": "",
+    "build": "electron-packager . xz_stories"
+  },
+  "author": "Vi",
+  "license": "MIT",
+  "dependencies": {
+    "asar": "^0.13.0",
+    "electron": "^8.2.0",
+    "electron-packager": "^8.7.2",
+    "fs": "0.0.1-security",
+    "marked": "^0.3.6",
+    "path": "^0.12.7"
+  }
+}

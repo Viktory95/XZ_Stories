@@ -1,0 +1,30 @@
+{
+  "story": {
+    "name": "story 1",
+    "episodes": [
+      {
+        "id": 1,
+        "name": "episode 1",
+        "scenes" : [
+          {
+            "id": 1,
+            "isStart": true,
+            "name": "scene 1",
+            "image": "image_path",
+            "text": "text",
+            "textPosition": "middle",
+            "animation": "",
+            "prize": "prize text",
+            "choices": [
+              {
+                "id": 1,
+                "text": "choise 1",
+                "nextScene": 2
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
