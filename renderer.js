@@ -35,12 +35,14 @@ $startStory.addEventListener('click', () => {
             if(fileData.story.episodes[episodeNum].scenes) {
                 for(let sceneNum = 0; sceneNum < fileData.story.episodes[episodeNum].scenes.length; sceneNum++) {
                     if(fileData.story.episodes[episodeNum].scenes[sceneNum].isStart) {
+                        console.log(fileData.story.episodes[episodeNum].scenes[sceneNum])
                         sceneView(storyName, fileData.story.episodes[episodeNum].id,
                             fileData.story.episodes[episodeNum].scenes[sceneNum].id,
                             fileData.story.episodes[episodeNum].scenes[sceneNum].image,
                             fileData.story.episodes[episodeNum].scenes[sceneNum].textPosition,
                             fileData.story.episodes[episodeNum].scenes[sceneNum].text,
-                            fileData.story.episodes[episodeNum].scenes[sceneNum].choices)
+                            fileData.story.episodes[episodeNum].scenes[sceneNum].choices,
+                            fileData.story.episodes[episodeNum].scenes[sceneNum].animation)
                         break
                     }
                 }
@@ -49,45 +51,43 @@ $startStory.addEventListener('click', () => {
     }
 })
 
-function sceneView(storyName, episodeId, sceneId, image, textPosition, text, choices) {
-    $viewStory.addEventListener('click', (e) => {
-    })
-
+function sceneView(storyName, episodeId, sceneId, image, textPosition, text, choices, animation) {
     $topBox.hidden = true
     $bottomBox.hidden = true
     $leftBox.hidden = true
     $rightBox.hidden = true
     $centerBox.hidden = true
-    $topBox.html = ''
-    $bottomBox.html = ''
-    $leftBox.html = ''
-    $rightBox.html = ''
-    $centerBox.html = ''
-    if($('div[id^=choice-]')) $('div[id^=choice-]').remove()
+    $topBox.innerHTML = ''
+    $bottomBox.innerHTML = ''
+    $leftBox.innerHTML = ''
+    $rightBox.innerHTML = ''
+    $centerBox.innerHTML = ''
 
     $sceneImg.src = dir + storyName + '/' + image
+    imgMovement(animation)
+
     switch (textPosition) {
         case 'Top':
-            sceneTextView($topBox, choices, storyName, episodeId, sceneId, text)
+            sceneTextView($topBox, choices, storyName, episodeId, sceneId, text, 'top-text')
             break
         case 'Bottom':
-            sceneTextView($bottomBox, choices, storyName, episodeId, sceneId, text)
+            sceneTextView($bottomBox, choices, storyName, episodeId, sceneId, text, 'bottom-text')
             break
         case 'Left':
-            sceneTextView($leftBox, choices, storyName, episodeId, sceneId, text)
+            sceneTextView($leftBox, choices, storyName, episodeId, sceneId, text, 'left-text')
             break
         case 'Right':
-            sceneTextView($rightBox, choices, storyName, episodeId, sceneId, text)
+            sceneTextView($rightBox, choices, storyName, episodeId, sceneId, text, 'right-text')
             break
         case 'Center':
-            sceneTextView($centerBox, choices, storyName, episodeId, sceneId, text)
+            sceneTextView($centerBox, choices, storyName, episodeId, sceneId, text, 'center-text')
             break
     }
 }
 
-function sceneTextView($box, choices, storyName, episodeId, sceneId, text) {
+function sceneTextView($box, choices, storyName, episodeId, sceneId, text, elId) {
     let $topText = document.createElement('div')
-    $topText.id = 'top-text'
+    $topText.id = elId
     $topText.innerText = text
     $box.append($topText)
     if(choices.length > 1 || choices[0].text !== 'default') {
@@ -101,19 +101,25 @@ function sceneTextView($box, choices, storyName, episodeId, sceneId, text) {
             div.nextScene = choices[choiceNum].nextScene
             $box.append(div)
 
-            $('#choice-' + episodeId + '-' + sceneId + '-' + choices[choiceNum].id).addEventListener('click', (e) => {
+            let choiceClickHandler = function (e) {
                 moveScenes(e.target.story, e.target.episodeId, e.target.nextScene)
-            })
+                div.removeEventListener('click', choiceClickHandler, false)
+            };
+
+            div.addEventListener('click', choiceClickHandler, false)
         }
     } else {
-        $box.story = storyName
-        $box.episodeId = episodeId
-        $box.sceneId = sceneId
-        $box.nextScene = choices[0].nextScene
+        $viewStory.story = storyName
+        $viewStory.episodeId = episodeId
+        $viewStory.sceneId = sceneId
+        $viewStory.nextScene = choices[0].nextScene
 
-        $viewStory.addEventListener('click', (e) => {
-            moveScenes($box.story, $box.episodeId, $box.nextScene)
-        })
+        let mainClickHandler = function (e) {
+            moveScenes($viewStory.story, $viewStory.episodeId, $viewStory.nextScene)
+            $viewStory.removeEventListener('click', mainClickHandler, false)
+        };
+
+        $viewStory.addEventListener('click', mainClickHandler, false)
     }
     $box.hidden = false
 }
@@ -134,7 +140,8 @@ function moveScenes(storyName, episodeId, nextScene) {
                                 fileData.story.episodes[episodeNum + 1].scenes[sceneNum].image,
                                 fileData.story.episodes[episodeNum + 1].scenes[sceneNum].textPosition,
                                 fileData.story.episodes[episodeNum + 1].scenes[sceneNum].text,
-                                fileData.story.episodes[episodeNum + 1].scenes[sceneNum].choices)
+                                fileData.story.episodes[episodeNum + 1].scenes[sceneNum].choices,
+                                fileData.story.episodes[episodeNum + 1].scenes[sceneNum].animation)
                             break
                         } else {
                             sceneView(storyName, fileData.story.episodes[episodeNum].id,
@@ -142,7 +149,8 @@ function moveScenes(storyName, episodeId, nextScene) {
                                 fileData.story.episodes[episodeNum].scenes[sceneNum].image,
                                 fileData.story.episodes[episodeNum].scenes[sceneNum].textPosition,
                                 fileData.story.episodes[episodeNum].scenes[sceneNum].text,
-                                fileData.story.episodes[episodeNum].scenes[sceneNum].choices)
+                                fileData.story.episodes[episodeNum].scenes[sceneNum].choices,
+                                fileData.story.episodes[episodeNum].scenes[sceneNum].animation)
                             break
                         }
                     }
@@ -155,4 +163,42 @@ function moveScenes(storyName, episodeId, nextScene) {
 function getDirectories(srcpath) {
     return fs.readdirSync(srcpath)
             .filter(file => fs.statSync(path.join(srcpath, file)).isDirectory())
+}
+
+function imgMovement(side) {
+    let elem = $('#scene-img')
+    elem.style.width = (window.innerWidth + 200) + "px"
+    elem.style.height = (window.innerHeight + 200) + "px"
+    let pos = -100
+    let timer
+    switch (side) {
+        case 'Move to the bottom':
+            timer = setInterval(function() {
+                pos++;
+                elem.style.top = pos + "px"
+                if( pos == 100) clearInterval(timer)
+            }, 25)
+            break
+        case 'Move to the top':
+            timer = setInterval(function() {
+                pos++;
+                elem.style.bottom = pos + "px"
+                if( pos == 100) clearInterval(timer)
+            }, 25)
+            break
+        case 'Move to the right':
+            timer = setInterval(function() {
+                    pos++;
+                    elem.style.left = pos + "px"
+                    if( pos == 100) clearInterval(timer)
+                }, 25)
+            break
+        case 'Move to the left':
+            timer = setInterval(function() {
+                pos++;
+                elem.style.right = pos + "px"
+                if( pos == 100) clearInterval(timer)
+            }, 25)
+            break
+    }
 }

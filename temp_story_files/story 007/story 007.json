@@ -12,7 +12,7 @@
             "name": "scene 0",
             "image": "07441b37cf0b5b98a5291247c6571990.jpg",
             "text": "fgh",
-            "textPosition": "Top",
+            "textPosition": "Bottom",
             "animation": "None",
             "prize": "fgh",
             "choices": [
@@ -29,17 +29,35 @@
             "name": "scene 1",
             "image": "07441b37cf0b5b98a5291247c6571990.jpg",
             "text": "yrhtg",
-            "textPosition": "Top",
+            "textPosition": "Center",
             "animation": "Move to the bottom",
             "prize": "ghnm",
             "choices": [
               {
                 "id": "1",
-                "text": "ghn"
+                "text": "ghn",
+                "nextScene": 3
               },
               {
                 "id": "2",
-                "text": "ghjnmn"
+                "text": "ghjnmn",
+                "nextScene": 3
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "isStart": false,
+            "name": "scene 2",
+            "image": "07441b37cf0b5b98a5291247c6571990.jpg",
+            "text": "111111",
+            "textPosition": "Center",
+            "animation": "Move to the right",
+            "prize": "ghnm",
+            "choices": [
+              {
+                "id": 0,
+                "text": "default"
               }
             ]
           }
