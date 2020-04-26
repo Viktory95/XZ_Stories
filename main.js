@@ -9,10 +9,9 @@ const fs = require('fs')
 let win = null
 
 app.on('ready', () => {
-    win = new BrowserWindow({width:900, height: 600, webPreferences: {
+    win = new BrowserWindow({width:600, height: 760, webPreferences: {
         nodeIntegration: true
-    }})
-    win.maximize()
+    }, resizable: false})
 win.loadURL('file://' + path.join(__dirname,'index.html'))
 
 win.webContents.openDevTools()

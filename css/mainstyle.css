@@ -1,38 +1,51 @@
+body {
+    background: #9ba8b8;
+}
+
 .container {
-    /*position: relative;*/
-    /*text-align: center;*/
+    width: 500px;
+    height: 550px;
     color: #000;
 }
 
 .bottom-text {
     position: absolute;
-    left: 50%;
-    bottom: 0%;
-    border: 6px double #0AC9B8;
-    border-radius: 20px 20px 20px 20px;
+    left: 45%;
+    bottom: 30%;
+    border: 6px groove #05828e;
+    border-radius: 10px 10px 10px 10px;
+    min-width: 100px;
+    min-height: 100px;
 }
 
 .top-text {
     position: absolute;
-    left: 50%;
-    top: 0%;
-    border: 6px double #0AC9B8;
-    border-radius: 20px 20px 20px 20px;
+    left: 45%;
+    top: 30%;
+    border: 6px groove #05828e;
+    border-radius: 10px 10px 10px 10px;
+    min-width: 100px;
+    min-height: 100px;
 }
 
 .right-text {
     position: absolute;
-    top: 50%;
-    left: 90%;
-    border: 6px double #0AC9B8;
-    border-radius: 20px 20px 20px 20px;
+    top: 40%;
+    left: 60%;
+    border: 6px groove #05828e;
+    border-radius: 10px 10px 10px 10px;
+    min-width: 100px;
+    min-height: 100px;
 }
 
 .left-text {
     position: absolute;
-    top: 50%;
-    border: 6px double #0AC9B8;
-    border-radius: 20px 20px 20px 20px;
+    top: 40%;
+    left: 30%;
+    border: 6px groove #05828e;
+    border-radius: 10px 10px 10px 10px;
+    min-width: 100px;
+    min-height: 100px;
 }
 
 .center-text {
@@ -40,6 +53,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border: 6px double #0AC9B8;
-    border-radius: 20px 20px 20px 20px;
+    border: 6px groove #05828e;
+    border-radius: 10px 10px 10px 10px;
+    min-width: 100px;
+    min-height: 100px;
 }

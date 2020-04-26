@@ -42,7 +42,8 @@ $startStory.addEventListener('click', () => {
                             fileData.story.episodes[episodeNum].scenes[sceneNum].textPosition,
                             fileData.story.episodes[episodeNum].scenes[sceneNum].text,
                             fileData.story.episodes[episodeNum].scenes[sceneNum].choices,
-                            fileData.story.episodes[episodeNum].scenes[sceneNum].animation)
+                            fileData.story.episodes[episodeNum].scenes[sceneNum].animation,
+                            fileData.story.episodes[episodeNum].scenes[sceneNum].prize)
                         break
                     }
                 }
@@ -51,7 +52,7 @@ $startStory.addEventListener('click', () => {
     }
 })
 
-function sceneView(storyName, episodeId, sceneId, image, textPosition, text, choices, animation) {
+function sceneView(storyName, episodeId, sceneId, image, textPosition, text, choices, animation, prize) {
     $topBox.hidden = true
     $bottomBox.hidden = true
     $leftBox.hidden = true
@@ -63,7 +64,9 @@ function sceneView(storyName, episodeId, sceneId, image, textPosition, text, cho
     $rightBox.innerHTML = ''
     $centerBox.innerHTML = ''
 
-    $sceneImg.src = dir + storyName + '/' + image
+    if(prize) alert(prize)
+
+    $sceneImg.style.backgroundImage = 'url(' + dir + storyName + '/' + image + ')'
     imgMovement(animation)
 
     switch (textPosition) {
@@ -141,7 +144,8 @@ function moveScenes(storyName, episodeId, nextScene) {
                                 fileData.story.episodes[episodeNum + 1].scenes[sceneNum].textPosition,
                                 fileData.story.episodes[episodeNum + 1].scenes[sceneNum].text,
                                 fileData.story.episodes[episodeNum + 1].scenes[sceneNum].choices,
-                                fileData.story.episodes[episodeNum + 1].scenes[sceneNum].animation)
+                                fileData.story.episodes[episodeNum + 1].scenes[sceneNum].animation,
+                                fileData.story.episodes[episodeNum + 1].scenes[sceneNum].prize)
                             break
                         } else {
                             sceneView(storyName, fileData.story.episodes[episodeNum].id,
@@ -150,7 +154,8 @@ function moveScenes(storyName, episodeId, nextScene) {
                                 fileData.story.episodes[episodeNum].scenes[sceneNum].textPosition,
                                 fileData.story.episodes[episodeNum].scenes[sceneNum].text,
                                 fileData.story.episodes[episodeNum].scenes[sceneNum].choices,
-                                fileData.story.episodes[episodeNum].scenes[sceneNum].animation)
+                                fileData.story.episodes[episodeNum].scenes[sceneNum].animation,
+                                fileData.story.episodes[episodeNum].scenes[sceneNum].prize)
                             break
                         }
                     }
@@ -167,37 +172,45 @@ function getDirectories(srcpath) {
 
 function imgMovement(side) {
     let elem = $('#scene-img')
-    elem.style.width = (window.innerWidth + 200) + "px"
-    elem.style.height = (window.innerHeight + 200) + "px"
-    let pos = -100
+    let pos = 0
     let timer
     switch (side) {
         case 'Move to the bottom':
+            elem.style.backgroundSize = '500px 700px'
+            elem.style.backgroundPosition = '60px ' + pos + 'px'
             timer = setInterval(function() {
                 pos++;
-                elem.style.top = pos + "px"
+                elem.style.backgroundPosition = '60px ' + pos + 'px'
                 if( pos == 100) clearInterval(timer)
             }, 25)
             break
         case 'Move to the top':
+            pos = 100
+            elem.style.backgroundSize = '500px 700px'
+            elem.style.backgroundPosition = '60px ' + pos + 'px'
             timer = setInterval(function() {
-                pos++;
-                elem.style.bottom = pos + "px"
-                if( pos == 100) clearInterval(timer)
+                pos--;
+                elem.style.backgroundPosition = '60px ' + pos + 'px'
+                if( pos == 0) clearInterval(timer)
             }, 25)
             break
         case 'Move to the right':
+            elem.style.backgroundSize = '550px 600px'
+            elem.style.backgroundPosition = pos + 'px 100px'
             timer = setInterval(function() {
                     pos++;
-                    elem.style.left = pos + "px"
-                    if( pos == 100) clearInterval(timer)
+                    elem.style.backgroundPosition =  pos + 'px 100px'
+                    if( pos == 50) clearInterval(timer)
                 }, 25)
             break
         case 'Move to the left':
+            pos = 60
+            elem.style.backgroundSize = '550px 600px'
+            elem.style.backgroundPosition = pos + 'px 100px'
             timer = setInterval(function() {
-                pos++;
-                elem.style.right = pos + "px"
-                if( pos == 100) clearInterval(timer)
+                pos--;
+                elem.style.backgroundPosition =  pos + 'px 100px'
+                if( pos == 10) clearInterval(timer)
             }, 25)
             break
     }
