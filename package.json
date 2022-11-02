@@ -13,7 +13,7 @@
   "dependencies": {
     "asar": "^0.13.0",
     "electron": "^8.2.0",
-    "electron-packager": "^8.7.2",
+    "electron-packager": "^17.1.1",
     "fs": "0.0.1-security",
     "marked": "^0.3.6",
     "path": "^0.12.7"
